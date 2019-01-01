@@ -1,16 +1,31 @@
-let open_btn = document.getElementById('open-modal'),
-    modal_window = document.getElementById('modal'),
-    close_btn = document.getElementById('close-modal');
+const openButton = document.getElementById('open-modal'),
+      modalContainer = document.getElementById('modal-container'),
+      modal = document.getElementById('modal'),
+      closeButton = document.getElementById('close-modal');
 
+let removeClass = () => modalContainer.classList.remove("modal-is-visible"),
+    doAnimation = () => {
+      modal.classList.remove('animation');
+      void modal.offsetWidth;
+      modal.classList.add('animation');
+    };
 
-open_btn.onclick = () => {
-  console.log("Modal is open");
-  modal_window.classList.add("modal-is-visible")
+openButton.onclick = () => {
+  modal.style.animationDirection = 'normal';
+  modalContainer.classList.add("modal-is-visible");
+  doAnimation();
 };
 
-close_btn.onclick = () => {
-  console.log("Modal is closed");
-  modal_window.classList.remove("modal-is-visible")
+closeButton.onclick = () => {
+  modal.style.animationDirection = 'reverse';
+  setTimeout(removeClass, 500);
+  doAnimation();
 };
 
-console.log("hello world");
+window.onclick = function(event) {
+  if (event.target == modalContainer) {
+    modal.style.animationDirection = 'reverse';
+    setTimeout(removeClass, 500);
+    doAnimation();
+  }
+};
