@@ -12,20 +12,21 @@ let removeClass = () => modalContainer.classList.remove("modal-is-visible"),
 
 openButton.onclick = () => {
   modal.style.animationDirection = 'normal';
-  modalContainer.classList.add("modal-is-visible");
   doAnimation();
+  modal.removeEventListener("animationend", removeClass);
+  modalContainer.classList.add("modal-is-visible");
 };
 
 closeButton.onclick = () => {
   modal.style.animationDirection = 'reverse';
-  setTimeout(removeClass, 500);
   doAnimation();
+  modal.addEventListener("animationend", removeClass);
 };
 
 window.onclick = function(event) {
-  if (event.target == modalContainer) {
+  if (event.target === modalContainer) {
     modal.style.animationDirection = 'reverse';
-    setTimeout(removeClass, 500);
     doAnimation();
+    modal.addEventListener("animationend", removeClass);
   }
 };
